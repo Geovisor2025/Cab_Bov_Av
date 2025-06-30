@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/horsey.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/ol3-search-layer.min.css">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <style>
+        html, body {
+            background-color: #ffffff;
+        }
+        .ol-control > * {
+            background-color: #f8f8f8!important;
+            color: #1f78b4!important;
+            border-radius: 0px;
+        }
+        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+            color: #1f78b4!important;
+        }
+        .search-layer-input-search {
+            background-color: #f8f8f8!important;
+        }
+        .ol-control > *:focus, .ol-control >*:hover {
+            background-color: rgba(248, 248, 248, 0.7)!important;
+        } 
+        .ol-control {
+            background-color: rgba(255,255,255,.4) !important;
+            padding: 2px !important;
+        } 
+
+        .opacity-control {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #e0e0e0;
+    border-radius: 16px;
+    padding: 12px 20px;
+    z-index: 1000;
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 3px 3px 6px #bebebe, -1px -1px 3px #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+        .opacity-control label {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #444;
+}
+
+.opacity-control input[type="range"] {
+    -webkit-appearance: none;
+    width: 150px;
+    height: 6px;
+    border-radius: 5px;
+    background: #ccc;
+    outline: none;
+    box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #f0f0f0;
+}
+
+.opacity-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #888;
+    border-radius: 50%;
+    box-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #f0f0f0;
+    cursor: pointer;
+}
+
+#header {
+    width: 100%;
+    height: 90.4 px; /* o el alto que necesites */
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+#header-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto asegura que la imagen llene toda el área */
+    display: block;
+}
+
+    .top-left-buttons {
+      position: absolute;
+      bottom: 10px;
+      left: 5px;
+      z-index: 10000;
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background-color: transparent;
+    }
+
+ .top-left-buttons button {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 12px;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, #8B4513, #4CAF50);
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.top-left-buttons button:hover {
+  background: linear-gradient(135deg, #5C3317, #388E3C);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+    #overlayImage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      display: none;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #overlayImage img {
+      max-width: 90%;
+      max-height: 90%;
+      border: 4px solid #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+        </style>
+
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 96.5%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Cantidad de Cabezas</title>
+    </head>
+    <body>
+        <header id="header">
+    <img src="images/carto.png" alt="Censo Agropecuario 2026" id="header-img">
+</header>
+        <div id="map">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
+        <div class="opacity-control">
+  <label for="opacityRange">Transparencia de coberturas</label>
+  <input type="range" id="opacityRange" min="0" max="1" step="0.1" value="1">
+</div>
+
+<div class="top-left-buttons">
+    <button id="toggleImageBtn">Mostrar Mapas</button>
+    <div id="buttonContainer" style="display: none; flex-direction: column; gap: 5px; margin-top: 10px;"></div>
+  </div>
+
+  <div id="overlayImage">
+    <img id="reportImage" src="" alt="Mapas Cartograficos" />
+  </div>
+<script>
+    const toggleBtn = document.getElementById('toggleImageBtn');
+    const buttonContainer = document.getElementById('buttonContainer');
+    const overlayImage = document.getElementById('overlayImage');
+    const reportImage = document.getElementById('reportImage');
+
+    // Lista de rutas de las imágenes y nombres personalizados
+    const imageData = [
+        { path: 'images/1.png', name: 'Mapa de Cantidad de Cabezas de Bovinos' },
+         { path: 'images/2.png', name: 'Mapa de Cantidad de Cabezas de Aves de Corral' }
+
+    ];
+
+    // Crear botones dinámicamente
+imageData.forEach((item) => {
+  const btn = document.createElement('button');
+  btn.textContent = item.name;
+  btn.addEventListener('click', () => {
+    reportImage.src = item.path;
+    overlayImage.style.display = 'flex';
+    buttonContainer.style.display = 'none'; // Ocultar el contenedor de botones
+    toggleBtn.textContent = 'Mostrar Mapas'; // Actualizar el texto del botón de alternancia
+  });
+  buttonContainer.appendChild(btn);
+});
+    // Mostrar u ocultar los botones al hacer clic en "Mostrar Reportes"
+    toggleBtn.addEventListener('click', () => {
+      if (buttonContainer.style.display === 'none' || buttonContainer.style.display === '') {
+        buttonContainer.style.display = 'flex';
+        toggleBtn.textContent = 'Ocultar Mapas';
+      } else {
+        buttonContainer.style.display = 'none';
+        overlayImage.style.display = 'none';
+        toggleBtn.textContent = 'Mostrar Mapas';
+      }
+    });
+
+    // Cerrar la imagen al hacer clic fuera de ella
+    overlayImage.addEventListener('click', (event) => {
+      if (event.target === overlayImage) {
+        overlayImage.style.display = 'none';
+      }
+    });
+  </script>
+        <script src="resources/qgis2web_expressions.js"></script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="resources/horsey.min.js"></script>
+        <script src="resources/ol3-search-layer.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="layers/Municipios_3.js"></script>
+        <script src="styles/Municipios_3_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>
+        <script>
+  const opacitySlider = document.getElementById('opacityRange');
+
+  // Lista de capas que quieres que reaccionen al slider
+  const layersToControl = [
+    lyr_CantidaddeCabezasdeAvesdeCorral_2,
+    lyr_CantidaddeCabezasdeBobino_1
+
+      ];
+opacitySlider.addEventListener('input', function () {
+    const value = parseFloat(this.value);
+    layersToControl.forEach(layer => {
+      layer.setOpacity(value);
+    });
+  });
+</script>
+    </body>
+</html>
