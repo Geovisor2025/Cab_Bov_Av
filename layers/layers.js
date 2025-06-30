@@ -16,11 +16,11 @@ var lyr_CantidaddeCabezasdeBobino_1 = new ol.layer.Image({
         opacity: 1,
         
     title: 'Cantidad de Cabezas de Bobino<br />\
-    <img src="styles/legend/CantidaddeCabezasdeBobino_1_0.png" /> 2,3476<br />\
-    <img src="styles/legend/CantidaddeCabezasdeBobino_1_1.png" /> 117,5804<br />\
-    <img src="styles/legend/CantidaddeCabezasdeBobino_1_2.png" /> 194,4023<br />\
-    <img src="styles/legend/CantidaddeCabezasdeBobino_1_3.png" /> 348,0460<br />\
-    <img src="styles/legend/CantidaddeCabezasdeBobino_1_4.png" /> 9796,9852<br />' ,
+    <img src="styles/legend/CantidaddeCabezasdeBobino_1_0.png" /> 2 - 40<br />\
+    <img src="styles/legend/CantidaddeCabezasdeBobino_1_1.png" /> 41 - 117<br />\
+    <img src="styles/legend/CantidaddeCabezasdeBobino_1_2.png" /> 118 - 194<br />\
+    <img src="styles/legend/CantidaddeCabezasdeBobino_1_3.png" /> 195 - 348<br />\
+    <img src="styles/legend/CantidaddeCabezasdeBobino_1_4.png" /> 349 - 9.797<br />' ,
         
         
         source: new ol.source.ImageStatic({
@@ -35,11 +35,11 @@ var lyr_CantidaddeCabezasdeAvesdeCorral_2 = new ol.layer.Image({
         opacity: 1,
         
     title: 'Cantidad de Cabezas de Aves de Corral<br />\
-    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_0.png" /> 7,9812<br />\
-    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_1.png" /> 33766,8990<br />\
-    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_2.png" /> 101284,7346<br />\
-    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_3.png" /> 286958,7824<br />\
-    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_4.png" /> 4304270,0000<br />' ,
+    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_0.png" /> 8 <br />\
+    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_1.png" /> 8 - 34.000<br />\
+    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_2.png" /> 34.000 - 101.000<br />\
+    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_3.png" /> 101.000 - 287.000<br />\
+    <img src="styles/legend/CantidaddeCabezasdeAvesdeCorral_2_4.png" /> 287.000 - 4.304.270<br />' ,
         
         
         source: new ol.source.ImageStatic({
